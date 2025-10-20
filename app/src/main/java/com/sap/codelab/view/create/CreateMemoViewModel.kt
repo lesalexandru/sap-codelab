@@ -12,7 +12,15 @@ import kotlinx.coroutines.launch
  */
 internal class CreateMemoViewModel : ViewModel() {
 
-    private var memo = Memo(0, String.empty(), String.empty(), 0, 0, 0, false)
+    private var memo = Memo(
+        id = 0,
+        title = String.empty(),
+        description = String.empty(),
+        reminderDate = 0,
+        reminderLatitude = null,
+        reminderLongitude = null,
+        isDone = false,
+    )
 
     /**
      * Saves the memo in it's current state.
@@ -26,8 +34,16 @@ internal class CreateMemoViewModel : ViewModel() {
     /**
      * Call this method to update the memo. This is usually needed when the user changed his input.
      */
-    fun updateMemo(title: String, description: String) {
-        memo = Memo(title = title, description = description, id = 0, reminderDate = 0, reminderLatitude = 0, reminderLongitude = 0, isDone = false)
+    fun updateMemo(title: String, description: String, latitude: Double?, longitude: Double?) {
+        memo = Memo(
+            title = title,
+            description = description,
+            id = 0,
+            reminderDate = 0,
+            reminderLatitude = latitude,
+            reminderLongitude = longitude,
+            isDone = false
+        )
     }
 
     /**

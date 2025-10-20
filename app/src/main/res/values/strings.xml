@@ -8,4 +8,15 @@
     <string name="action_save">Save</string>
     <string name="memo_title_empty_error">Please provide a title for this memo</string>
     <string name="memo_text_empty_error">Please provide a memo description</string>
+    <string name="memo_notification_title">Memo Geofence</string>
+    <string name="lat_long">Lat: %1$s Long: %2$s</string>
+    <string name="selected_location">Selected Location</string>
+    <string name="background_location_required">Background Location Required</string>
+    <string name="bg_location_required_message">This app uses background location to send you reminders when you approach a memo\'s location, even when the app is closed.</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="location_permission_required">Location permission required. Tap here to open settings.</string>
+    <string name="location_select_prompt">Long-press on the map to select a location</string>
+    <string name="notification_permission_rationale_title">Notification Permission</string>
+    <string name="notification_permission_rationale_message">To ensure you receive timely reminders when you are near a memo\'s location, please grant notification permissions. This will allow the app to send you alerts even when it\'s in the background.</string>
 </resources>

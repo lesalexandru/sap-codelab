@@ -26,4 +26,14 @@ internal interface IMemoRepository {
      * @return the memo whose id matches the given id.
      */
     fun getMemoById(id: Long): Memo
+
+    /**
+     * Adds a geofence for the given memo.
+     */
+    fun addGeofence(memo: Memo)
+
+    /**
+     * Removes the geofence for the given memo.
+     */
+    fun removeGeofence(memo: Memo)
 }

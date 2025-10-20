@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.android.material)
+    implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
 
     //Lifecycle, LiveData and ViewModel dependencies
     implementation(libs.androidx.lifecycle.runtime)
@@ -65,7 +67,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    testImplementation(libs.androidx.junit)
+    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

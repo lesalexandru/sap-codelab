@@ -2,17 +2,18 @@ package com.sap.codelab.view.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sap.codelab.R
 import com.sap.codelab.databinding.ActivityHomeBinding
 import com.sap.codelab.model.Memo
+import com.sap.codelab.presentation.permission.PermissionHelper
 import com.sap.codelab.view.create.CreateMemo
 import com.sap.codelab.view.detail.BUNDLE_MEMO_ID
 import com.sap.codelab.view.detail.ViewMemo
@@ -27,6 +28,8 @@ internal class Home : AppCompatActivity() {
     private lateinit var model: HomeViewModel
     private lateinit var menuItemShowAll: MenuItem
     private lateinit var menuItemShowOpen: MenuItem
+    private lateinit var permissionHelper: PermissionHelper
+
     private val createMemoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             model.refreshMemos()
@@ -39,6 +42,11 @@ internal class Home : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         model = ViewModelProvider(this)[HomeViewModel::class.java]
+
+        // Request location and notification permissions
+        permissionHelper = PermissionHelper(this)
+        permissionHelper.requestLocationPermission()
+        permissionHelper.requestNotificationPermission()
 
         // Setup the adapter and the recycler view
         setupRecyclerView(initializeAdapter())
@@ -53,15 +61,17 @@ internal class Home : AppCompatActivity() {
     /**
      * Initializes the adapter and sets the needed callbacks.
      */
-    private fun initializeAdapter() : MemoAdapter {
-        val adapter = MemoAdapter(mutableListOf(), { view ->
+    private fun initializeAdapter(): MemoAdapter {
+        val adapter = MemoAdapter(
+            items = mutableListOf(),
             // Implementation for when the user selects a row to show the detail view
-            showMemo((view.tag as Memo).id)
-        }, { checkbox, isChecked ->
-            // Implementation for when the user marks a memo as completed
-            model.updateMemo(checkbox.tag as Memo, isChecked)
-            model.refreshMemos()
-        })
+            onClick = { view -> showMemo((view.tag as Memo).id) },
+            onCheckboxChanged = { checkbox, isChecked ->
+                // Implementation for when the user marks a memo as completed
+                model.updateMemo(checkbox.tag as Memo, isChecked)
+                model.refreshMemos()
+            }
+        )
         lifecycle.coroutineScope.launch {
             model.memos.collect { memos ->
                 adapter.setItems(memos)
